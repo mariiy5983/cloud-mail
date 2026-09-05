@@ -68,9 +68,9 @@
       </template>
       <div class="dialog-box">
         <el-input class="dialog-input" v-model="form.name" type="text" :maxlength="12" :placeholder="$t('roleName')"
-                  autocomplete="off"/>
+                  autocomplete="off" @keyup.enter="roleFormClick"/>
         <el-input class="dialog-input" v-model="form.description" :maxlength="30" type="text"
-                  :placeholder="$t('description')" autocomplete="off"/>
+                  :placeholder="$t('description')" autocomplete="off" @keyup.enter="roleFormClick"/>
         <el-input-tag class="dialog-input" tag-type="warning" v-model="form.banEmail"
                       @add-tag="banEmailAddTag" type="text" :placeholder="$t('emailInterception')" autocomplete="off"/>
         <el-select
@@ -120,7 +120,7 @@
                                  :placeholder="$t('total')">
                 </el-input-number>
                   <el-select v-model="form.sendType" placeholder="Select" size="small"
-                             :style="`width: ${ locale === 'zh' ? 65 : 85 }px;margin-left: 5px;`">
+                             :style="`width: ${ locale === 'en' ? 85 : 65 }px;margin-left: 5px;`">
                     <el-option :label="$t('total')" value="count"/>
                     <el-option :label="$t('daily')" value="day"/>
                     <el-option :label="$t('internal')" value="internal"/>
@@ -233,6 +233,7 @@ function banEmailAddTag(val) {
 
 
 function roleFormClick() {
+  if (permLoading.value) return
   if (dialogType.type === 'add') {
     addRole()
   } else {

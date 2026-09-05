@@ -38,7 +38,8 @@
           placeholder="Select"
           @change="changeLang"
       >
-        <el-option label="中文" value="zh" @pointerdown.prevent.stop="changeLang('zh')"/>
+        <el-option label="繁體中文（臺灣）" value="zh-TW" @pointerdown.prevent.stop="changeLang('zh-TW')"/>
+        <el-option label="简体中文" value="zh" @pointerdown.prevent.stop="changeLang('zh')"/>
         <el-option label="English" value="en" @pointerdown.prevent.stop="changeLang('en')"/>
       </el-select>
     </div>
@@ -53,8 +54,8 @@
     </div>
     <el-dialog v-model="pwdShow" :title="$t('changePassword')" width="340">
       <div class="update-pwd">
-        <el-input type="password" :placeholder="$t('newPassword')" v-model="form.password" autocomplete="off"/>
-        <el-input type="password" :placeholder="$t('confirmPassword')" v-model="form.newPwd" autocomplete="off"/>
+        <el-input type="password" :placeholder="$t('newPassword')" v-model="form.password" autocomplete="off" @keyup.enter="submitPwd"/>
+        <el-input type="password" :placeholder="$t('confirmPassword')" v-model="form.newPwd" autocomplete="off" @keyup.enter="submitPwd"/>
         <el-button type="primary" :loading="setPwdLoading" @click="submitPwd">{{$t('save')}}</el-button>
       </div>
     </el-dialog>
@@ -159,6 +160,8 @@ const deleteConfirm = () => {
 
 
 function submitPwd() {
+
+  if (setPwdLoading.value) return
 
   if (!form.password) {
     ElMessage({
@@ -282,7 +285,7 @@ function submitPwd() {
     margin-bottom: 40px;
 
     .language-select {
-      width: 100px;
+      width: 180px;
     }
   }
 
